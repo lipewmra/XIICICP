@@ -74,7 +74,7 @@ export default function Footer() {
         {/* Brand copyright notice and metadata */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] text-neutral-500 uppercase font-sans select-none">
           <p>© 2026 XII Colóquio Internacional de Políticas Curriculares. Todos os direitos reservados.</p>
-          <p>Rigor Acadêmico & Geometria Equilibrada • João Pessoa - PB</p>
+          <p className="select-text lowercase font-mono">desenvolvido por Philippe Wagner Melo Regis de Araujo lipewmra@gmail.com</p>
         </div>
 
       </div>
