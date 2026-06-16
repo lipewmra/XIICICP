@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "ColoquioDataState": {
+      "title": "ColoquioDataState",
+      "description": "Formularios, programacao, textos e imagens do coloquio",
+      "type": "object",
+      "properties": {
+        "marquee": { "type": "object" },
+        "heroSlides": { "type": "array" },
+        "letter": { "type": "object" },
+        "quickActions": { "type": "array" },
+        "announcements": { "type": "array" },
+        "schedule": { "type": "array" },
+        "speakers": { "type": "array" },
+        "spots": { "type": "array" },
+        "venues": { "type": "array" },
+        "services": { "type": "array" },
+        "committee": { "type": "array" }
+      }
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Administradores autorizados do sistema",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": [
+        "email"
+      ]
+    }
+  },
+  "firestore": {
+    "coloquio_data/{docId}": {
+      "schema": "ColoquioDataState",
+      "description": "Estado persistente e configuracoes do coloquio"
+    },
+    "admins/{userId}": {
+      "schema": "AdminUser",
+      "description": "Lista de administradores autorizados"
+    },
+    "admin_emails/{email}": {
+      "schema": "AdminUser",
+      "description": "Lista de emails do Google autorizados como administrador"
+    }
+  }
+}

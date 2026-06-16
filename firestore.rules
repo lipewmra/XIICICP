@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net Default-Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return request.auth.token.email_verified == true;
+    }
+
+    function isAdminEmail(email) {
+      return exists(/databases/$(database)/documents/admin_emails/$(email));
+    }
+
+    function isAdminUid(uid) {
+      return exists(/databases/$(database)/documents/admins/$(uid));
+    }
+
+    // A user is admin if they exist in the 'admins' collection, their email is in 'admin_emails', or their email is 'lipewmra@gmail.com'
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'lipewmra@gmail.com' ||
+        isAdminUid(request.auth.uid) ||
+        (request.auth.token.email != null && isAdminEmail(request.auth.token.email))
+      );
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidColoquioData(data) {
+      return data.marquee is map
+          && data.heroSlides is list
+          && data.letter is map;
+    }
+
+    function isValidAdminUser(data) {
+      return data.email is string && data.email.size() <= 128;
+    }
+
+    // Validation for Admins
+    match /admins/{userId} {
+      allow read: if true; // Let clients read to check admin status
+      allow write: if isAdmin() && isValidAdminUser(incoming());
+    }
+
+    // Validation for admin emails (added by other admins)
+    match /admin_emails/{email} {
+      allow read: if isSignedIn() && (
+        request.auth.token.email == 'lipewmra@gmail.com' ||
+        isAdminUid(request.auth.uid) ||
+        request.auth.token.email == email
+      );
+      allow write: if isAdmin();
+    }
+
+    // Validation for Coloquio Data
+    match /coloquio_data/{docId} {
+      allow read: if true; // Everyone can read public content
+      allow write: if isAdmin() && isValidColoquioData(incoming());
+    }
+  }
+}

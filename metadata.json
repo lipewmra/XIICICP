@@ -1,0 +1,6 @@
+{
+  "name": "XII Colóquio Políticas Curriculares",
+  "description": "Plataforma oficial do XII Colóquio Internacional de Políticas Curriculares",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

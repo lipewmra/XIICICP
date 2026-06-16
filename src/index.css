@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&family=Corben:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Cordenilo';
+  src: url('/src/fonts/Cordenilo.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --font-cordenilo: "Cordenilo", sans-serif;
+  --font-corben: "Corben", serif;
+}
+
+body {
+  background-color: #f0f2f5;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  color: #1e293b;
+}
+
+/* Slide in animation utility */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
